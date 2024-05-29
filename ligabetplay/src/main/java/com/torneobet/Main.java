@@ -78,7 +78,7 @@ public class Main {
         sc.close();
     }
 
-    private static void pausa(Scanner sc) {
+    public static void pausa(Scanner sc) {
         System.out.println("Presiona cualquier tecla para volver al menu principal");
         sc.nextLine();
     }
