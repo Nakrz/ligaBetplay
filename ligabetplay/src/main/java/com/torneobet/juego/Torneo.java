@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Torneo {
-    private List<Equipo> equipos;
+    public List<Equipo> equipos;
 
     public Torneo() {
         this.equipos = new ArrayList<>();
@@ -35,23 +35,89 @@ public class Torneo {
         System.out.println("\n");
     }
 
-    public void jugarTorneo() {
+    public void jugarPartido(Equipo equipo1, Equipo equipo2) {
         Random random = new Random();
-        for (Equipo equipo : equipos) {
-            int partidosJugados = random.nextInt(7) + 1;
-            int partidosGanados = random.nextInt(partidosJugados + 1);
-            int partidosEmpatados = random.nextInt(partidosJugados - partidosGanados + 1);
-            int partidosPerdidos = partidosJugados - partidosGanados - partidosEmpatados;
-            int golesFavor = random.nextInt(6) + 1;
-            int golesContra = random.nextInt(6) + 1;
+        int golesEquipo1 = random.nextInt(4);
+        int golesEquipo2 = random.nextInt(4); 
 
-            equipo.setPj(partidosJugados);
-            equipo.setPg(partidosGanados);
-            equipo.setPe(partidosEmpatados);
-            equipo.setPp(partidosPerdidos);
-            equipo.setGf(golesFavor);
-            equipo.setGc(golesContra);
-            equipo.setTp((partidosGanados * 3) + partidosEmpatados);
+        equipo1.puntosDeTorneo(golesEquipo1, golesEquipo2);
+        equipo2.puntosDeTorneo(golesEquipo2, golesEquipo1);
+
+        System.out.println(MessageFormat.format("{0} {1} - {2} {3}",
+                equipo1.getNombreEquipo(), golesEquipo1, golesEquipo2, equipo2.getNombreEquipo()));
+    }
+
+    public void jugarTorneo() {
+        for (int i = 0; i < equipos.size(); i++) {
+            for (int j = i + 1; j < equipos.size(); j++) {
+                jugarPartido(equipos.get(i), equipos.get(j));
+            }
         }
+    }
+
+    public void masGolesAnotados() {
+        Equipo maxGolesEquipo = new Equipo("", 0, 0, 0, 0, 0, 0, 0, new ArrayList<>());
+        int maxGoles = 0;
+        for (Equipo equipo : equipos) {
+            if (equipo.getGf() > maxGoles) {
+                maxGoles = equipo.getGf();
+                maxGolesEquipo = equipo;
+            }
+        }
+        if (maxGolesEquipo != new Equipo("", 0, 0, 0, 0, 0, 0, 0, new ArrayList<>())); {
+            System.out.println("El equipo que mas goles anotó es: " + maxGolesEquipo.getNombreEquipo() + " con " + maxGoles + " goles.");
+        }
+    }
+
+    public void equipoMasPuntos() {
+        Equipo maxPuntosEquipo = new Equipo("", 0, 0, 0, 0, 0, 0, 0, new ArrayList<>());
+        int maxPuntos = 0;
+        for (Equipo equipo : equipos) {
+            if (equipo.getTp() > maxPuntos) {
+                maxPuntos = equipo.getTp();
+                maxPuntosEquipo = equipo;
+            }
+        }
+        if (maxPuntosEquipo != new Equipo("", 0, 0, 0, 0, 0, 0, 0, new ArrayList<>())); {
+            System.out.println("El equipo que mas puntos tiene es: " + maxPuntosEquipo.getNombreEquipo());
+        }
+    }
+
+    public void masPartidosGanados() {
+        Equipo maxGanadosEquipo = new Equipo("", 0, 0, 0, 0, 0, 0, 0, new ArrayList<>());
+        int maxGanados = 0;
+        for (Equipo equipo : equipos) {
+            if (equipo.getPg() > maxGanados) {
+                maxGanados = equipo.getPg();
+                maxGanadosEquipo = equipo;
+            }
+        }
+        if (maxGanadosEquipo != new Equipo("", 0, 0, 0, 0, 0, 0, 0, new ArrayList<>())); {
+            System.out.println("El equipo que mas partidos gano fue el: " + maxGanadosEquipo.getNombreEquipo());
+        }
+    }
+
+    public void totalGoles() {
+        int totalGoles = 0;
+        for (Equipo equipo : equipos) {
+            totalGoles += equipo.getGf();
+        }
+        System.out.println("El total de goles anotados por todos los equipos es: " + totalGoles);
+    }
+
+    public void promedioGoles() {
+        int totalGoles = 0;
+        int totalPartidos = 0;
+        for (Equipo equipo : equipos) {
+            totalGoles += equipo.getGf();
+            totalPartidos += equipo.getPj();
+        }
+        double promedioGoles;
+        if (totalPartidos == 0) {
+            promedioGoles = 0;
+        } else {
+            promedioGoles = (double) totalGoles / totalPartidos;
+        }
+        System.out.println("El promedio de goles anotados en el torneo es: " + promedioGoles);
     }
 }

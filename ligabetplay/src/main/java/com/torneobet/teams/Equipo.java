@@ -102,4 +102,19 @@ public class Equipo {
     public void addEquipo(int equipo) {
         this.equipos.add(equipo);
     }
+
+    public void puntosDeTorneo(int golesFavor, int golesContra) {
+        this.pj += 1;
+        this.gf += golesFavor;
+        this.gc += golesContra;
+        if (golesFavor > golesContra) {
+            this.pg += 1;
+            this.tp += 3;
+        } else if (golesFavor < golesContra) {
+            this.pp += 1;
+        } else {
+            this.pe += 1;
+            this.tp += 1;
+        }
+    }
 }
