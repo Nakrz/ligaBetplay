@@ -65,7 +65,7 @@ public class Torneo {
             }
         }
         if (maxGolesEquipo != new Equipo("", 0, 0, 0, 0, 0, 0, 0, new ArrayList<>())); {
-            System.out.println("El equipo que mas goles anotó es: " + maxGolesEquipo.getNombreEquipo() + " con " + maxGoles + " goles.");
+            System.out.println("El equipo que mas goles anoto es: " + maxGolesEquipo.getNombreEquipo());
         }
     }
 
