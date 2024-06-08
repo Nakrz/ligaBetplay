@@ -1,9 +1,14 @@
 package com.torneobet.juego;
 
+import com.torneobet.grupo.EquipoMedico;
+import com.torneobet.grupo.EquipoTecnico;
+import com.torneobet.grupo.Jugador;
+import com.torneobet.grupo.Plantilla;
 import com.torneobet.teams.Equipo;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -17,6 +22,68 @@ public class Torneo {
     public void registrarEquipo(String nombreEquipo) {
         Equipo nuevoEquipo = new Equipo(nombreEquipo, 0, 0, 0, 0, 0, 0, 0, new ArrayList<>());
         equipos.add(nuevoEquipo);
+    }
+
+    public void registrarJugador(Jugador jugador, String nombreEquipo) {
+        for (Equipo equipo : equipos) {
+            if (equipo.getNombreEquipo().equals(nombreEquipo)) {
+                equipo.agregarJugador(jugador);
+                break;
+            }
+        }
+    }
+
+    public void registrarEquipoTecnico(EquipoTecnico equipoTecnico, String nombreEquipo) {
+        for (Equipo equipo : equipos) {
+            if (equipo.getNombreEquipo().equals(nombreEquipo)) {
+                List<EquipoTecnico> equipoTecnicoList = new ArrayList<>();
+                equipoTecnicoList.add(equipoTecnico);
+                equipo.asignarEquipoTecnico(equipoTecnicoList);
+                break;
+            }
+        }
+    }
+
+    public void registrarEquipoMedico(EquipoMedico equipoMedico, String nombreEquipo) {
+        for (Equipo equipo : equipos) {
+            if (equipo.getNombreEquipo().equals(nombreEquipo)) {
+                List<EquipoMedico> equipoMedicoList = new ArrayList<>();
+                equipoMedicoList.add(equipoMedico);
+                equipo.asignarEquipoMedico(equipoMedicoList);
+                break;
+            }
+        }
+    }
+
+    public void listarPlantilla(String nombreEquipo) {
+        for (Equipo equipo : equipos) {
+            if (equipo.getNombreEquipo().equals(nombreEquipo)) {
+                System.out.println("\nEquipo: " + equipo.getNombreEquipo());
+                
+                System.out.println("\nJugadores:");
+                for (Jugador jugador : equipo.getJugadores()) {
+                    System.out.println(jugador.getNombre() + " " + jugador.getApellidos() +
+                            " (" + jugador.getDorsal() + ") - " + jugador.getPosicion());
+                }
+                
+                System.out.println("\nEquipo Tecnico:");
+                for (EquipoTecnico tecnico : equipo.getEquipoTecnico()) {
+                    System.out.println("\nTecnico: " + tecnico.getTecnico());
+                    System.out.println("\nAsistente Tecnico: " + tecnico.getAsisTecnico());
+                    System.out.println("\nPreparador Físico: " + tecnico.getPrepFisico());
+                }
+
+                System.out.println("\nEquipo Medico:");
+                for (EquipoMedico medico : equipo.getEquipoMedico()) {
+                    System.out.println("\nFisioterapeuta: " + medico.getFisioterapeuta());
+                    System.out.println("\nMedico: " + medico.getMedico());
+                }
+                
+                System.out.println("-----------------------------------");
+                return;
+            }
+        }
+        System.out.println("El equipo '" + nombreEquipo + "' no se encuentra registrado.");
     }
 
     public void tablaPuntajes() {

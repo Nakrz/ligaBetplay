@@ -2,6 +2,10 @@ package com.torneobet.teams;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.torneobet.grupo.Jugador;
+import com.torneobet.grupo.EquipoTecnico;
+import com.torneobet.grupo.EquipoMedico;
+
 
 public class Equipo {
 
@@ -14,6 +18,9 @@ public class Equipo {
     int gc;
     int tp;
     List<Integer> equipos;
+    List<Jugador> jugadores;
+    List<EquipoTecnico> equipoTecnico;
+    List<EquipoMedico> equipoMedico;
 
     public Equipo(String nombreEquipo, int pj, int pg, int pp, int pe, int gf, int gc, int tp, List<Integer> equipos) {
         this.nombreEquipo = nombreEquipo;
@@ -25,6 +32,33 @@ public class Equipo {
         this.gc = gc;
         this.tp = tp;
         this.equipos = new ArrayList<>(equipos);
+        this.jugadores = new ArrayList<>();
+        this.equipoTecnico = new ArrayList<>();
+        this.equipoMedico = new ArrayList<>();
+    }
+
+    public List<Jugador> getJugadores() {
+        return jugadores;
+    }
+
+    public void setJugadores(List<Jugador> jugadores) {
+        this.jugadores = jugadores;
+    }
+
+    public List<EquipoTecnico> getEquipoTecnico() {
+        return equipoTecnico;
+    }
+
+    public void setEquipoTecnico(List<EquipoTecnico> equipoTecnico) {
+        this.equipoTecnico = equipoTecnico;
+    }
+
+    public List<EquipoMedico> getEquipoMedico() {
+        return equipoMedico;
+    }
+
+    public void setEquipoMedico(List<EquipoMedico> equipoMedico) {
+        this.equipoMedico = equipoMedico;
     }
 
     public String getNombreEquipo() {
@@ -116,5 +150,17 @@ public class Equipo {
             this.pe += 1;
             this.tp += 1;
         }
+    }
+
+    public void agregarJugador(Jugador jugador) {
+        this.jugadores.add(jugador);
+    }
+
+    public void asignarEquipoTecnico(List<EquipoTecnico> equipoTecnico) {
+        this.equipoTecnico = equipoTecnico;
+    }
+
+    public void asignarEquipoMedico(List<EquipoMedico> equipoMedico) {
+        this.equipoMedico = equipoMedico;
     }
 }
